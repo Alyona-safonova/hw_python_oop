@@ -22,7 +22,7 @@ class Training:
     """Базовый класс тренировки."""
     LEN_STEP: float = 0.65
     M_IN_KM: int = 1000
-    MINN: int = 60
+    MIN_IN_HOURS: int = 60
 
     def __init__(self,
                  action: int,
@@ -66,7 +66,7 @@ class Running(Training):
                 - self.COEFF_CALORIE_2
             )
             * self.weight / self.M_IN_KM
-            * self.duration * self.MINN
+            * self.duration * self.MIN_IN_HOURS
         )
 
 
@@ -95,13 +95,13 @@ class SportsWalking(Training):
                 )
                 * self.COEFF_CALORIE_3 * self.weight
             )
-            * self.duration * self.MINN
+            * self.duration * self.MIN_IN_HOURS
         )
 
 
 class Swimming(Training):
     """Тренировка: плавание."""
-    LEN_STEP = 1.38
+    LEN_STEP: float = 1.38
     COEFF_CALORIE_1: float = 1.1
     COEFF_CALORIE_2: int = 2
 
@@ -132,8 +132,7 @@ def read_package(workout_type: str, data: list) -> Training:
                      'WLK': SportsWalking}
     if workout_type not in training_type:
         raise ValueError(f'{workout_type} неизвестный тип тренировки')
-    else:
-        return training_type[workout_type](*data)
+    return training_type[workout_type](*data)
 
 
 def main(training: Training) -> None:
